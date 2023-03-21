@@ -20,5 +20,4 @@ exports.down = (pgm) => {
     `);
 };
 
-//bash: DATABASE_URL=postgres://postgres:jeison30jJ@localhost:5432/socialnetwork pnpm migrate up
-//set DATABASE_URL=postgres://postgres:jeison30jJ@localhost:5432/socialnetwork&&pnpm migrate up
+//bash: DATABASE_URL=postgres://postgres:contraseña@localhost:5432/socialnetwork pnpm migrate up
