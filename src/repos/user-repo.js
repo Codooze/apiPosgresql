@@ -1,25 +1,42 @@
 const pool = require("../pool");
+const toCamelCase = require("./utils/to-camel-case");
 
 class UserRepo {
   static async findAll() {
     const { rows } = await pool.query("SELECT * FROM users");
-    return rows;
+
+    return toCamelCase(rows);
   }
 
   static async findById(id) {
-    return await pool.query("SELECT * FROM users WHERE id = $1", [id]);
+    const { rows } = await pool.query("SELECT * FROM users WHERE id = $1", [
+      id,
+    ]);
+    return toCamelCase(rows)[0];
   }
 
-  static async insert(user) {
-    return await pool.query();
+  static async insert(user, bio) {
+    const { rows } = await pool.query(
+      "INSERT INTO users (username, bio) VALUES ($1, $2) RETURNING *",
+      [user, bio]
+    ); // we use RETURNING * to return the row that was created
+    return toCamelCase(rows)[0];
   }
 
-  static async update(user) {
-    return await pool.query();
+  static async update(id, user, bio) {
+    const { rows } = await pool.query(
+      "UPDATE users SET username = $1, bio = $2 WHERE id = $3 RETURNING *",
+      [user, bio, id]
+    );
+    return toCamelCase(rows)[0];
   }
 
   static async delete(id) {
-    return await pool.query();
+    const { rows } = await pool.query(
+      "DELETE FROM users WHERE id = $1 RETURNING *",
+      [id]
+    );
+    return toCamelCase(rows)[0];
   }
 }
 

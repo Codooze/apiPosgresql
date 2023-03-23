@@ -13,9 +13,9 @@ class Pool {
     return this._pool.end();
   }
 
-  //REALLY BIG SECURITY ISSUE, NEVER DO THIS IN PRODUCTION
-  query(sql) {
-    return this._pool.query(sql);
+  //REALLY IMPORTANT TO ADD params to the query TO PREVENT SQL INJECTION
+  query(sql, params) {
+    return this._pool.query(sql, params);
   }
 }
 
